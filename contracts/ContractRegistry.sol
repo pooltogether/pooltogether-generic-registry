@@ -4,11 +4,12 @@ pragma solidity ^0.7.6;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 
 import "./utils/MappedSinglyLinkedList.sol";
 
 ///@notice A registry to hold Contract addresses.  Underlying data structure is a singly linked list. 
-contract ContractRegistry is Ownable {
+contract ContractRegistry is Ownable, Initializable {
 
     using MappedSinglyLinkedList for MappedSinglyLinkedList.Mapping;
 
@@ -21,15 +22,15 @@ contract ContractRegistry is Ownable {
     string public contractType;    
     
     /// @notice Initializer function
-    function initializer(string calldata _contractType) external initializer {
+    function initialize(string calldata _contractType, address _owner) external initializer {
         contractType = _contractType;
         contractList.initialize();
-        Ownable();
+        transferOwnership(_owner);
     }
 
 
     /// @notice Returns an array of all contract addresses in the linked list
-    ///@return Array of prize pool addresses
+    /// @return Array of contract addresses
     function getContracts() view external returns(address[] memory) {
         return contractList.addressArray();
     } 

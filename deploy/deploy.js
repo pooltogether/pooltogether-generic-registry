@@ -12,20 +12,27 @@ function green() {
 
 module.exports = async (hardhat) => {
 
-    console.log("running deploy script")
+    dim("running deploy script")
 
-    console.log("network id ", await getChainId())
+    dim("network id ", await getChainId())
 
     const { getNamedAccounts, deployments, ethers } = hardhat
     const { deploy } = deployments
     const { deployer } = await getNamedAccounts()
 
     dim(`deploying GenericRegistry contract from ${deployer}`)
-    const prizePoolRegistry = await deploy('PrizePoolRegistry', {
-      args: [],
+
+    // use GenericProxyFactory deploy function?
+
+    const registryContractName = "PrizePools" // for example
+
+    const genericRegistryDeployResult = await deploy('GenericRegistry', {
+      args: [registryContractName],
       from: deployer,
       skipIfAlreadyDeployed: false
     })
-    green(`Deployed GenericRegistry: ${prizePoolRegistry.address}`)  
+
+    
+    green(`Deployed GenericRegistry: ${genericRegistryDeployResult.address}`)  
 
 }
