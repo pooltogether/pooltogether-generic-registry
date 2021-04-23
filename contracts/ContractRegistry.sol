@@ -37,7 +37,7 @@ contract ContractRegistry is Ownable, Initializable {
 
     /// @notice Adds addresses to the linked list. Will revert if the address is already in the list.  Can only be called by the Registry owner.
     /// @param _contracts Array of contract addresses to be added
-    function addContract(address[] calldata _contracts) public onlyOwner {
+    function addContracts(address[] calldata _contracts) public onlyOwner {
         for(uint256 _contract = 0; _contract < _contracts.length; _contract++ ){ 
             contractList.addAddress(_contracts[_contract]);
             emit ContractAdded(_contracts[_contract]);
