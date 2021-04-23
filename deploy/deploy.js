@@ -1,5 +1,7 @@
 const chalk = require('chalk');
 const { getChainId } = require('hardhat');
+// const { factoryDeploy } = require('@pooltogether-proxy-factory-package')
+
 
 function dim() {
   console.log(chalk.dim.call(chalk, ...arguments))
@@ -22,17 +24,15 @@ module.exports = async (hardhat) => {
 
     dim(`deploying GenericRegistry contract from ${deployer}`)
 
-    // use GenericProxyFactory deploy function?
-
-    const registryContractName = "PrizePools" // for example
-
-    const genericRegistryDeployResult = await deploy('GenericRegistry', {
-      args: [registryContractName],
+    // deploy instance of implementation
+    const genericRegistryDeployResult = await deploy('ContractRegistry', {
+      args: [],
       from: deployer,
-      skipIfAlreadyDeployed: false
+      skipIfAlreadyDeployed: true
     })
 
-    
     green(`Deployed GenericRegistry: ${genericRegistryDeployResult.address}`)  
+
+    // can then use factoryDeploy()
 
 }
