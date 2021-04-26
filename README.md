@@ -1,6 +1,6 @@
 # pooltogether-generic-registry
 
-[![Coverage Status](https://coveralls.io/repos/github/pooltogether/pooltogether-generic-registry/badge.svg?branch=main)](https://coveralls.io/github/pooltogether/pooltogether-generic-registry?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/pooltogether/pooltogether-generic-registry/badge.svg?branch=master)](https://coveralls.io/github/pooltogether/pooltogether-generic-registry?branch=master)
 [![<PoolTogether>](https://circleci.com/gh/pooltogether/pooltogether-generic-registry.svg?style=shield)](https://circleci.com/gh/pooltogether/pooltogether-generic-registry)
 
 
