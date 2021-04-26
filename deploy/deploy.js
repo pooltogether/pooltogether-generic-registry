@@ -25,7 +25,7 @@ module.exports = async (hardhat) => {
     dim(`deploying Generic AddressRegistry contract from ${deployer}`)
 
     // deploy instance of implementation
-    const genericRegistryDeployResult = await deploy('ContractRegistry', {
+    const genericRegistryDeployResult = await deploy('AddressRegistry', {
       args: [],
       from: deployer,
       skipIfAlreadyDeployed: true
