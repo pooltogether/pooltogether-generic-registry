@@ -8,8 +8,6 @@ import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 
 import "./utils/MappedSinglyLinkedList.sol";
 
-import "hardhat/console.sol";
-
 ///@notice A registry to hold Contract addresses.  Underlying data structure is a singly linked list. 
 contract AddressRegistry is Ownable, Initializable {
 
@@ -21,11 +19,11 @@ contract AddressRegistry is Ownable, Initializable {
     MappedSinglyLinkedList.Mapping internal addressList;
 
     /// @notice Storage field for what type of contract this Registry is storing 
-    string public contractType;    
+    string public addressType;    
     
     /// @notice Initializer function
     function initialize(string calldata _addressType, address _owner) external initializer {
-        contractType = _addressType;
+        addressType = _addressType;
         addressList.initialize();
         transferOwnership(_owner);
     }
@@ -41,7 +39,6 @@ contract AddressRegistry is Ownable, Initializable {
     /// @param _addresses Array of contract addresses to be added
     function addAddresses(address[] calldata _addresses) public onlyOwner {
         for(uint256 _address = 0; _address < _addresses.length; _address++ ){
-            console.log("registry: adding address ", _addresses[_address]); 
             addressList.addAddress(_addresses[_address]);
             emit AddressAdded(_addresses[_address]);
         }
@@ -55,5 +52,3 @@ contract AddressRegistry is Ownable, Initializable {
         emit AddressRemoved(_address);
     } 
 }
-
-// change to address registry

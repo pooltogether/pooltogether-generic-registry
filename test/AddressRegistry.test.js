@@ -36,7 +36,14 @@ describe('GenericContractRegistry', function() {
 
   })
 
-  describe.only('Owner able to add/remove prize pools to the registry', () => {
+  describe('Owner able to add/remove prize pools to the registry', () => {
+    
+    it('initializes the registry', async () => {
+      await expect(addressRegistry.initialize("prizePools", wallet.address))
+      .to.emit(addressRegistry, "OwnershipTransferred")
+      expect(await addressRegistry.addressType()).to.equal("prizePools")
+    })
+
     it('adds Addresses to the registry', async () => {
       await expect(addressRegistry.addAddresses([contract1.address, contract2.address]))
       .to.emit(addressRegistry, "AddressAdded")
@@ -62,13 +69,8 @@ describe('GenericContractRegistry', function() {
     })
 
     it('reverts when contract already added', async () => {      
-      console.log("all contracts before", await addressRegistry.getAddresses())
-      console.log("adding ", contract3.address)
       await addressRegistry.addAddresses([contract3.address])
-      console.log("all contracts before", await addressRegistry.getAddresses())
-      await  addressRegistry.addAddresses([contract3.address])
-      // console.log("all contracts after", await addressRegistry.getAddresses())
-      //await expect(addressRegistry.addAddresses([contract2.address])).to.be.revertedWith("Already added")    
+      await expect(addressRegistry.addAddresses([contract3.address])).to.be.revertedWith("Already added")    
     })
 
   })
