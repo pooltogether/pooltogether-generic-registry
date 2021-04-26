@@ -2,6 +2,8 @@
 
 pragma solidity ^0.7.6;
 
+import "hardhat/console.sol";
+
 /// @notice An efficient implementation of a singly linked list of addresses
 /// @dev A mapping(address => address) tracks the 'next' pointer.  A special address called the SENTINEL is used to denote the beginning and end of the list.
 library MappedSinglyLinkedList {
@@ -36,6 +38,7 @@ library MappedSinglyLinkedList {
   }
 
   function addAddresses(Mapping storage self, address[] memory addresses) internal {
+    console.log("library addAddresses adding " );
     for (uint256 i = 0; i < addresses.length; i++) {
       addAddress(self, addresses[i]);
     }
@@ -45,11 +48,17 @@ library MappedSinglyLinkedList {
   /// @param self The Mapping struct that this function is attached to
   /// @param newAddress The address to shift to the front of the list
   function addAddress(Mapping storage self, address newAddress) internal {
+    console.log("library addAddress 1 " );
     require(newAddress != SENTINEL && newAddress != address(0), "Invalid address");
+    console.log("library addAddress 2 ", self.addressMap[newAddress] );
     require(self.addressMap[newAddress] == address(0), "Already added");
+    console.log("library addAddress 3 " );
     self.addressMap[newAddress] = self.addressMap[SENTINEL];
+    console.log("library addAddress 4" );
     self.addressMap[SENTINEL] = newAddress;
+    console.log("library addAddress 5 " );
     self.count = self.count + 1;
+     console.log("library addAddress 6 " );
   }
 
   /// @notice Removes an address from the list

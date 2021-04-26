@@ -22,7 +22,7 @@ module.exports = async (hardhat) => {
     const { deploy } = deployments
     const { deployer } = await getNamedAccounts()
 
-    dim(`deploying GenericRegistry contract from ${deployer}`)
+    dim(`deploying Generic AddressRegistry contract from ${deployer}`)
 
     // deploy instance of implementation
     const genericRegistryDeployResult = await deploy('ContractRegistry', {
