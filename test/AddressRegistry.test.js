@@ -6,7 +6,7 @@ const SENTINAL = '0x0000000000000000000000000000000000000001'
 
 let overrides = { gasLimit: 200000000 }
 
-describe('GenericContractRegistry', function() {
+describe.only('GenericContractRegistry', function() {
 
 
   let wallet, wallet2, wallet3, wallet4
@@ -16,12 +16,13 @@ describe('GenericContractRegistry', function() {
   let contract1, contract2, contract3
   let prizeStrategy
 
-  before(async () => {
+  beforeEach(async () => {
 
     [wallet, wallet2, wallet3, wallet4] = await hre.ethers.getSigners()
     const contractRegistryContractFactory = await hre.ethers.getContractFactory("AddressRegistry", wallet, overrides)
     addressRegistry = await contractRegistryContractFactory.deploy()
-  
+    await addressRegistry.initialize("prizePools", wallet.address)
+    
 
     const PrizePool = await hre.artifacts.readArtifact("PrizePool")
     contract1 = await deployMockContract(wallet, PrizePool.abi, overrides)
@@ -39,8 +40,6 @@ describe('GenericContractRegistry', function() {
   describe('Owner able to add/remove prize pools to the registry', () => {
     
     it('initializes the registry', async () => {
-      await expect(addressRegistry.initialize("prizePools", wallet.address))
-      .to.emit(addressRegistry, "OwnershipTransferred")
       expect(await addressRegistry.addressType()).to.equal("prizePools")
     })
 
@@ -51,11 +50,13 @@ describe('GenericContractRegistry', function() {
     })
 
     it('returns all contract addresses registered', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
       const resultArr = await addressRegistry.callStatic.getAddresses()
       expect(resultArr).to.deep.equal([contract2.address, contract1.address])
     })
 
     it('removes a contract from the registry', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
       await expect(addressRegistry.removeAddress(contract2.address, contract1.address))
       .to.emit(addressRegistry, "AddressRemoved").withArgs(contract1.address)
     })

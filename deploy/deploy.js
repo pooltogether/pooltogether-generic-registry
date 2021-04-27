@@ -1,7 +1,5 @@
 const chalk = require('chalk');
 const { getChainId } = require('hardhat');
-const { factoryDeploy } = require('@pooltogether-proxy-factory-package')
-
 
 
 function dim() {
@@ -32,8 +30,6 @@ module.exports = async (hardhat) => {
       skipIfAlreadyDeployed: true
     })
 
-    green(`Deployed GenericRegistry: ${genericRegistryDeployResult.address}`)  
-
-    // can then use factoryDeploy()
+    green(`Deployed AddressRegistry: ${genericRegistryDeployResult.address}`)  
 
 }
