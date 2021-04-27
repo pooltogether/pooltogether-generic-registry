@@ -28,7 +28,6 @@ contract AddressRegistry is Ownable, Initializable {
         transferOwnership(_owner);
     }
 
-
     /// @notice Returns an array of all contract addresses in the linked list
     /// @return Array of contract addresses
     function getAddresses() view external returns(address[] memory) {

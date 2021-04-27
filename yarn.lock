@@ -712,6 +712,11 @@
     deploy-eip-1820 "1.0.0"
     sortition-sum-tree-factory "0.1.0"
 
+"@pooltogether/pooltogether-generic-registry@^1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@pooltogether/pooltogether-generic-registry/-/pooltogether-generic-registry-1.0.0-beta.2.tgz#886650be7ff8a668713e3ada4af7c36fc3d00550"
+  integrity sha512-yRlurSDIIYw+xseERLJfZY5uZKgwnX9KrhsoctcnI8hj1ql34LJv+KpZmehCnCLaoE9Yw4hW2Z8WunkeBCCZuw==
+
 "@pooltogether/pooltogether-proxy-factory-package@latest":
   version "1.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@pooltogether/pooltogether-proxy-factory-package/-/pooltogether-proxy-factory-package-1.0.0-beta.17.tgz#8abc7ecb3603de0b03ddd3162c159c70c2a29a9e"

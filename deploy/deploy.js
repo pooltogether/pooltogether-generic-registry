@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const { getChainId } = require('hardhat');
-// const { factoryDeploy } = require('@pooltogether-proxy-factory-package')
+const { factoryDeploy } = require('@pooltogether-proxy-factory-package')
+
 
 
 function dim() {
