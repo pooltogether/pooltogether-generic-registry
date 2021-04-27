@@ -4,7 +4,7 @@
 [![<PoolTogether>](https://circleci.com/gh/pooltogether/pooltogether-generic-registry.svg?style=shield)](https://circleci.com/gh/pooltogether/pooltogether-generic-registry)
 
 
-A Generic Address Registry implementation for use across contracts in combination with the Generic Proxy Factory. 
+An iterable Generic Address Registry implmentation using a singly linked list as the underlying data structure. 
 
 
 # Installation
