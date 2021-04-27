@@ -21,7 +21,7 @@ describe('GenericContractRegistry', function() {
     [wallet, wallet2, wallet3, wallet4] = await hre.ethers.getSigners()
     const contractRegistryContractFactory = await hre.ethers.getContractFactory("AddressRegistry", wallet, overrides)
     addressRegistry = await contractRegistryContractFactory.deploy()
-    
+  
 
     const PrizePool = await hre.artifacts.readArtifact("PrizePool")
     contract1 = await deployMockContract(wallet, PrizePool.abi, overrides)
