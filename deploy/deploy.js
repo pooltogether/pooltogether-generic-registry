@@ -25,7 +25,7 @@ module.exports = async (hardhat) => {
 
     // deploy instance of implementation
     const genericRegistryDeployResult = await deploy('AddressRegistry', {
-      args: [],
+      args: ["", deployer],
       from: deployer,
       skipIfAlreadyDeployed: true
     })

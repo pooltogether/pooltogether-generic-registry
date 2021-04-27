@@ -20,8 +20,8 @@ describe.only('GenericContractRegistry', function() {
 
     [wallet, wallet2, wallet3, wallet4] = await hre.ethers.getSigners()
     const contractRegistryContractFactory = await hre.ethers.getContractFactory("AddressRegistry", wallet, overrides)
-    addressRegistry = await contractRegistryContractFactory.deploy()
-    await addressRegistry.initialize("prizePools", wallet.address)
+    addressRegistry = await contractRegistryContractFactory.deploy("prizePools", wallet.address)
+    
     
 
     const PrizePool = await hre.artifacts.readArtifact("PrizePool")

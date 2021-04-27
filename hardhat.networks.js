@@ -49,6 +49,14 @@ if (process.env.INFURA_API_KEY && process.env.HDWALLET_MNEMONIC) {
       mnemonic: process.env.HDWALLET_MNEMONIC
     }
   }
+  
+  networks.matic = {
+    chainId: 137,
+    url: 'https://rpc-mainnet.maticvigil.com',
+    accounts: {
+      mnemonic: process.env.HDWALLET_MNEMONIC
+    }
+  }
 
   networks.mainnet = {
     saveDeployments: true,
