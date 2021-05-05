@@ -55,18 +55,58 @@ describe.only('GenericContractRegistry', function() {
       expect(resultArr).to.deep.equal([contract2.address, contract1.address])
     })
 
+    it('checks if an address exists in the list', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
+      const resultArr = await addressRegistry.callStatic.contains(contract2.address)
+      expect(resultArr).to.equal(true)
+    })
+    
+    it('checks that an address does not exist in the list', async () => {
+      await addressRegistry.addAddresses([contract1.address])
+      const resultArr = await addressRegistry.callStatic.contains(contract2.address)
+      expect(resultArr).to.equal(false)
+    })
+
     it('removes a contract from the registry', async () => {
       await addressRegistry.addAddresses([contract1.address, contract2.address])
       await expect(addressRegistry.removeAddress(contract2.address, contract1.address))
       .to.emit(addressRegistry, "AddressRemoved").withArgs(contract1.address)
     })
 
+    it('owner clears all addresses from registry', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
+      await addressRegistry.clearAll()
+      const allAddressesLengthAfterClear = (await addressRegistry.callStatic.getAddresses()).length
+
+      expect(allAddressesLengthAfterClear).to.equal(0)
+    })
+
+    it('reverts when non-owner tries to clear', async () => {
+      await expect(addressRegistry.connect(wallet2).clearAll()).
+      to.be.revertedWith("Ownable: caller is not the owner")    
+    })
+
+    it('returns the start of the list', async () => {
+       expect(await addressRegistry.start()).to.equal(SENTINAL)    
+    })
+
+    it('returns the end of the list (sentinal)', async () => {
+      expect(await addressRegistry.end()).to.equal(SENTINAL)    
+   })
+
+    it('gives the next address in the list', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
+      expect(await addressRegistry.next(contract2.address)).to.equal(contract1.address)    
+   })
+
     it('reverts when non-owner tries to add a contract', async () => {
-      await expect(addressRegistry.connect(wallet2).addAddresses([prizeStrategy.address])).to.be.revertedWith("Ownable: caller is not the owner")    
+      await expect(addressRegistry.connect(wallet2).addAddresses([prizeStrategy.address])).
+      to.be.revertedWith("Ownable: caller is not the owner")    
     })
     
     it('reverts when non-owner tries to remove a contract', async () => {
-      await expect(addressRegistry.connect(wallet2).removeAddress(prizeStrategy.address, SENTINAL)).to.be.revertedWith("Ownable: caller is not the owner")    
+      await expect(addressRegistry.connect(wallet2).removeAddress(prizeStrategy.address, SENTINAL)).
+      to.be.revertedWith("Ownable: caller is not the owner")    
     })
 
     it('reverts when contract already added', async () => {      
