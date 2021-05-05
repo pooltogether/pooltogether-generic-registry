@@ -2,7 +2,6 @@
 
 pragma solidity >=0.6.12 <=0.7.6;
 
-
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./utils/MappedSinglyLinkedList.sol";
@@ -12,10 +11,13 @@ contract AddressRegistry is Ownable {
 
     using MappedSinglyLinkedList for MappedSinglyLinkedList.Mapping;
 
-    event AddressAdded(address indexed _address);
-    event AddressRemoved(address indexed _address);
-
     MappedSinglyLinkedList.Mapping internal addressList;
+
+    /// @notice Emmitted when a contract has been added to the registry
+    event AddressAdded(address indexed _address);
+    
+    /// @notice Emmitted when a contract has been removed to the registry
+    event AddressRemoved(address indexed _address);
 
     /// @notice Storage field for what type of contract this Registry is storing 
     string public addressType;    
