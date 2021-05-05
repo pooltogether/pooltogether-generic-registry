@@ -81,6 +81,11 @@ describe.only('GenericContractRegistry', function() {
       expect(allAddressesLengthAfterClear).to.equal(0)
     })
 
+    it('clear all event emitted', async () => {
+      await addressRegistry.addAddresses([contract1.address, contract2.address])
+      expect(await addressRegistry.clearAll()).to.emit(addressRegistry, "AllAddressesCleared")
+    })
+
     it('reverts when non-owner tries to clear', async () => {
       await expect(addressRegistry.connect(wallet2).clearAll()).
       to.be.revertedWith("Ownable: caller is not the owner")    

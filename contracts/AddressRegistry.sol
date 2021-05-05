@@ -19,6 +19,9 @@ contract AddressRegistry is Ownable {
     /// @notice Emmitted when a contract has been removed to the registry
     event AddressRemoved(address indexed _address);
 
+    /// @notice Emitted when all the registry addresses are cleared
+    event AllAddressesCleared();
+
     /// @notice Storage field for what type of contract this Registry is storing 
     string public addressType;    
 
@@ -57,6 +60,7 @@ contract AddressRegistry is Ownable {
     /// @notice Removes every address from the list
     function clearAll() public onlyOwner {
         addressList.clearAll();
+        emit AllAddressesCleared();
     }
     
     /// @notice Determines whether the list contains the given address
