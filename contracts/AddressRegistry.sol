@@ -73,20 +73,20 @@ contract AddressRegistry is Ownable {
     /// @notice Gives the address at the start of the list
     /// @return The address at the start of the list
     function start() public view returns (address) {
-        return addressList.addressMap[MappedSinglyLinkedList.SENTINEL];
+        return addressList.start();
     }
 
     /// @notice Exposes the internal next() iterator
     /// @param current The current address
     /// @return Returns the next address in the list
     function next(address current) public view returns (address) {
-        return addressList.addressMap[current];
+        return addressList.next(current);
     }
     
     /// @notice Exposes the end of the list
     /// @return The sentinel address
-    function end() public pure returns (address) {
-        return MappedSinglyLinkedList.SENTINEL;
+    function end() public view returns (address) {
+        return addressList.end();
     }
 
 }
