@@ -1,12 +1,14 @@
 const { deployMockContract } = require('ethereum-waffle')
 const { expect } = require('chai')
 const hre = require('hardhat')
+const { TASK_COMPILE_SOLIDITY_HANDLE_COMPILATION_JOBS_FAILURES } = require('hardhat/builtin-tasks/task-names')
+const { ethers } = require('hardhat')
 
 const SENTINAL = '0x0000000000000000000000000000000000000001'
 
 let overrides = { gasLimit: 200000000 }
 
-describe.only('GenericContractRegistry', function() {
+describe('GenericContractRegistry', function() {
 
 
   let wallet, wallet2, wallet3, wallet4
@@ -97,12 +99,12 @@ describe.only('GenericContractRegistry', function() {
 
     it('returns the end of the list (sentinal)', async () => {
       expect(await addressRegistry.end()).to.equal(SENTINAL)    
-   })
+    })
 
     it('gives the next address in the list', async () => {
       await addressRegistry.addAddresses([contract1.address, contract2.address])
       expect(await addressRegistry.next(contract2.address)).to.equal(contract1.address)    
-   })
+    })
 
     it('reverts when non-owner tries to add a contract', async () => {
       await expect(addressRegistry.connect(wallet2).addAddresses([prizeStrategy.address])).
@@ -119,6 +121,38 @@ describe.only('GenericContractRegistry', function() {
       await expect(addressRegistry.addAddresses([contract3.address])).to.be.revertedWith("Already added")    
     })
 
+  })
+
+  describe('Test capacity of Registry', () => {
+    let callingContract
+
+    it('Places 100 pools in registry', async () => {
+
+      const zeroAddress = ethers.constants.AddressZero
+      
+      console.log("Putting random addresses in registry")
+
+      let addresses = []
+
+      for(i = 2; i < 200;  i++){
+        const address = (zeroAddress.substr(0, zeroAddress.length - i.toString().length)) + i.toString()
+        addresses.push(address)
+      }
+
+      const gasEstimateToAdd = await addressRegistry.estimateGas.addAddresses(addresses)
+      await addressRegistry.addAddresses(addresses)
+      console.log(gasEstimateToAdd.toString()) // 2481508 for 98 pods, 4972962 for 198 pods
+      
+      const gasEstimateToGet = await addressRegistry.estimateGas.getAddresses()
+      console.log("getAddresses() gas estimate ", 
+      gasEstimateToGet.toString()) // 270604 for 98 pods, 520241 for 198 pods
+      
+      console.log("getAddresses() gas estimate from calling contract ", 
+      (await callingContract.estimateGas.getAddresses()).toString()) // 290759 for 98, 555527 for 198 pods
+
+      const callingContractFactory = await ethers.getContractFactory("RegistryCallingContract")
+      callingContract = await callingContractFactory.deploy(addressRegistry.address)
+    })
   })
 
 });
