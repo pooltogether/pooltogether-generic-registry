@@ -146,12 +146,12 @@ describe('GenericContractRegistry', function() {
       const gasEstimateToGet = await addressRegistry.estimateGas.getAddresses()
       console.log("getAddresses() gas estimate ", 
       gasEstimateToGet.toString()) // 270604 for 98 pods, 520241 for 198 pods
-      
+         
+      const callingContractFactory = await ethers.getContractFactory("RegistryCallingContract")
+      callingContract = await callingContractFactory.deploy(addressRegistry.address)
       console.log("getAddresses() gas estimate from calling contract ", 
       (await callingContract.estimateGas.getAddresses()).toString()) // 290759 for 98, 555527 for 198 pods
 
-      const callingContractFactory = await ethers.getContractFactory("RegistryCallingContract")
-      callingContract = await callingContractFactory.deploy(addressRegistry.address)
     })
   })
 
