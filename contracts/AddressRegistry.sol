@@ -2,7 +2,6 @@
 
 pragma solidity >=0.6.12 <=0.7.6;
 
-
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 import "./utils/MappedSinglyLinkedList.sol";
@@ -12,14 +11,20 @@ contract AddressRegistry is Ownable {
 
     using MappedSinglyLinkedList for MappedSinglyLinkedList.Mapping;
 
+    MappedSinglyLinkedList.Mapping internal addressList;
+
+    /// @notice Emmitted when a contract has been added to the registry
     event AddressAdded(address indexed _address);
+    
+    /// @notice Emmitted when a contract has been removed to the registry
     event AddressRemoved(address indexed _address);
 
-    MappedSinglyLinkedList.Mapping internal addressList;
+    /// @notice Emitted when all the registry addresses are cleared
+    event AllAddressesCleared();
 
     /// @notice Storage field for what type of contract this Registry is storing 
     string public addressType;    
-    
+
     /// @notice Contract constructor sets addressType, intializes list and transfers ownership
     /// @param _addressType The type of contracts stored in this registry 
     /// @param _owner The address to set as owner of the contract
@@ -51,4 +56,37 @@ contract AddressRegistry is Ownable {
         addressList.removeAddress(_previousContract, _address); 
         emit AddressRemoved(_address);
     } 
+
+    /// @notice Removes every address from the list
+    function clearAll() public onlyOwner {
+        addressList.clearAll();
+        emit AllAddressesCleared();
+    }
+    
+    /// @notice Determines whether the list contains the given address
+    /// @param _addr The address to check
+    /// @return True if the address is contained, false otherwise.
+    function contains(address _addr) public returns (bool) {
+        return addressList.contains(_addr);
+    }
+
+    /// @notice Gives the address at the start of the list
+    /// @return The address at the start of the list
+    function start() public view returns (address) {
+        return addressList.addressMap[MappedSinglyLinkedList.SENTINEL];
+    }
+
+    /// @notice Exposes the internal next() iterator
+    /// @param current The current address
+    /// @return Returns the next address in the list
+    function next(address current) public view returns (address) {
+        return addressList.addressMap[current];
+    }
+    
+    /// @notice Exposes the end of the list
+    /// @return The sentinel address
+    function end() public pure returns (address) {
+        return MappedSinglyLinkedList.SENTINEL;
+    }
+
 }
