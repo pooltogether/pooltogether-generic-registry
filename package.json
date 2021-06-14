@@ -1,6 +1,6 @@
 {
   "name": "@pooltogether/pooltogether-generic-registry",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Generic registry for contract addresses",
   "author": "Aodhgan Gleeson",
   "license": "MIT",
@@ -23,7 +23,6 @@
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^3.4.0",
     "@pooltogether/pooltogether-contracts": "^3.3.0",
-    "@pooltogether/pooltogether-generic-registry": "^1.0.0-beta.2",
     "@pooltogether/pooltogether-proxy-factory-package": "latest",
     "chai": "^4.3.0",
     "chalk": "^4.1.0",
@@ -39,8 +38,7 @@
   },
   "peerDependencies": {
     "@openzeppelin/contracts": "^3.4.0",
-    "@pooltogether/pooltogether-contracts": "^3.3.0",
-    "@pooltogether/pooltogether-generic-registry": "^1.0.0-beta.2"
+    "@pooltogether/pooltogether-contracts": "^3.3.0"
   },
   "files": [
     "contracts",
