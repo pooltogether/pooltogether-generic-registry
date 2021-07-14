@@ -1,6 +1,6 @@
 {
   "name": "@pooltogether/pooltogether-generic-registry",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Generic registry for contract addresses",
   "author": "Aodhgan Gleeson",
   "license": "MIT",

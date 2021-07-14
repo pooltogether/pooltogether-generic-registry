@@ -66,7 +66,7 @@ contract AddressRegistry is Ownable {
     /// @notice Determines whether the list contains the given address
     /// @param _addr The address to check
     /// @return True if the address is contained, false otherwise.
-    function contains(address _addr) public returns (bool) {
+    function contains(address _addr) public view returns (bool) {
         return addressList.contains(_addr);
     }
 
